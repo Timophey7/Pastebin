@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:h2://mem:db
+    username: user
+    password: password
+    driver-class-name: org.h2.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: ZmRlZWRhc3Nl
+
+management:
+  endpoints.web.exposure.include: 'prometheus, health'
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
+  prometheus:
+    metrics:
+      export:
+        enabled: true

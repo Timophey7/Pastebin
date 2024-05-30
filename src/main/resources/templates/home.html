@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pastebin App</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            color: #333;
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+        .container {
+            margin: 20px;
+            flex-grow: 1;
+        }
+        h1 {
+            color: #007bff;
+        }
+        input[type="text"] {
+            width: 100%;
+            height: 50px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        input[name="time"] {
+            width: calc(100% - 10px);
+            height: 30px;
+            font-size: 14px;
+        }
+        button {
+            height: 50px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .link {
+            color: #007bff;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Home page Pastebin App</h1>
+    <form action="/v1/pastebin/postText" method="post">
+        <textarea name="text" placeholder="Enter your text"></textarea>
+        <input type="text" name="time" placeholder="Lifetime: yyyy-mm-dd hh:mm:ss">
+        <a>Отправьте url на почту себе или другу!</a>
+        <input type="text" name="email" placeholder="email">
+        <button type="submit">Send</button>
+    </form>
+    <a>Вот ваш url:</a>
+    <a th:href="${url.url}" >
+        <p th:text="${url.url}" ></p>
+    </a>
+</div>
+<div class="container">
+    <h2>Popular Links</h2>
+    <div th:each="view:${views}">
+        <a th:href="'http://localhost:8082/text/' + ${view.hashId}" class="link">
+            <p th:text="'http://localhost:8082/text/' + ${view.hashId}"></p>
+        </a>
+    </div>
+</div>
+</body>
+</html>
+
