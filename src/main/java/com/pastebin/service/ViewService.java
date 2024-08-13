@@ -12,4 +12,6 @@ public interface ViewService {
 
     List<Views> mostPopularViews();
 
+    void saveView(String id);
+
 }

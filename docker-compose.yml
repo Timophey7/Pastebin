@@ -1,14 +1,8 @@
 version: "3.9"
 services:
-  postgres:
-    image: postgres:13.3
-    environment:
-      POSTGRES_DB: "pastebin"
-      POSTGRES_USER: "user"
-      POSTGRES_PASSWORD: "test"
-    ports:
-      - "5432:5432"
   redis:
+
+
     image: redis:7.2-rc-alpine
     container_name: redis
     ports:
@@ -18,22 +12,21 @@ services:
       - cache:/data
     restart: always
 
-
-  prometheus:
-    image: prom/prometheus
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
-
-
-  grafana:
-    image: grafana/grafana
-    ports:
-      - "3000:3000"
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+#  prometheus:
+#    image: prom/prometheus
+#    ports:
+#      - "9090:9090"
+#    volumes:
+#      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+#
+#
+#  grafana:
+#    image: grafana/grafana
+#    ports:
+#      - "3000:3000"
+#    environment:
+#      - GF_SECURITY_ADMIN_USER=admin
+#      - GF_SECURITY_ADMIN_PASSWORD=admin
 
 volumes:
   cache: {}

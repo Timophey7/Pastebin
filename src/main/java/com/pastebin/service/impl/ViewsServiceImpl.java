@@ -20,11 +20,6 @@ public class ViewsServiceImpl implements ViewService {
     private final ViewsRepository viewsRepository;
 
     @Override
-    public void save(Views view) {
-        viewsRepository.save(view);
-    }
-
-    @Override
     @Cacheable(value = "redis",key = "#hashId")
     public Views findByHashId(String hashId) {
         return viewsRepository.findByHashId(hashId);
@@ -42,5 +37,18 @@ public class ViewsServiceImpl implements ViewService {
         };
         views.sort(viewsComparator);
         return views;
+    }
+
+    @Override
+    public void saveView(String id) {
+        Views views = new Views();
+        views.setHashId(id);
+        views.setViewsCount(1);
+        save(views);
+    }
+
+    @Override
+    public void save(Views view) {
+        viewsRepository.save(view);
     }
 }

@@ -1,5 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: db/changelog/create-text-schema.xml
-  - include:
-      file: db/changelog/create-url-schema.xml

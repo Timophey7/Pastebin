@@ -12,7 +12,9 @@ import com.pastebin.service.impl.MailServiceImpl;
 import com.pastebin.service.impl.TextServiceImpl;
 import io.micrometer.core.annotation.Timed;
 import jakarta.servlet.http.HttpSession;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -25,12 +27,13 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
+@FieldDefaults(makeFinal = true,level = AccessLevel.PRIVATE)
 @RequestMapping("/v1/pastebin")
 public class HomeController {
 
-    private final TextServiceImpl textService;
-    private final ViewService viewService;
-    private final MailServiceImpl mailService;
+    TextServiceImpl textService;
+    ViewService viewService;
+    MailServiceImpl mailService;
 
    @Timed("homePage")
    @GetMapping("/home")
@@ -69,10 +72,7 @@ public class HomeController {
     public String getText(@PathVariable String id,Model model) {
         Views views = viewService.findByHashId(id);
         if (views == null) {
-            views = new Views();
-            views.setHashId(id);
-            views.setViewsCount(1);
-            viewService.save(views);
+            viewService.saveView(id);
         } else {
             views.setViewsCount(views.getViewsCount() + 1);
             viewService.save(views);
